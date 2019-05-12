@@ -22,10 +22,11 @@ final class Solution {
             let d = m / p10X
             //print("d: \(d)")
             a.append(d)
-            if x / p10 < 1 { break }
+            if x / p10 == 0 { break }
             n += 1
             p10X = p10
         }
+        //print("a: \(a)")
         var ret = 0
         for n in a {
             let t1 = p10X.multipliedReportingOverflow(by: n)
@@ -59,7 +60,7 @@ final class Solution {
 
 let solution = Solution()
 
-let x = 120
+let x = -123456
 let ans = solution.reverse(x)
 print("ans: \(ans)")
 
