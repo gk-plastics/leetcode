@@ -4,18 +4,15 @@ final class Solution {
     //let min: Int = Int(truncating: NSDecimalNumber(decimal: pow(-2, 31)))
     //let max: Int = Int(truncating: NSDecimalNumber(decimal: pow(2, 31) - 1))
     func reverse(_ x: Int) -> Int {
-        guard x < Int32.max else { return 0 }
-        guard x > Int32.min else { return 0 }
+        guard x <= Int32.max else { print("1"); return 0 }
+        guard x >= Int32.min else { print("2"); return 0 }
         var n = 1
         var p10 = 1, p10X = 1
         var a = [Int]()
         while true {
             let t = p10.multipliedReportingOverflow(by: 10)
-            guard t.overflow == false else { return 0 }
-            let p10New = t.partialValue
-            guard p10New < Int32.max else { return 0 }
-            guard p10New > Int32.min else { return 0 }
-            p10 = p10New
+            guard t.overflow == false else { print("3"); return 0 }
+            p10 = t.partialValue
             //print("p10: \(p10)")
             let m = (x % p10)
             //print("m: \(m)")
@@ -30,15 +27,15 @@ final class Solution {
         var ret = 0
         for n in a {
             let t1 = p10X.multipliedReportingOverflow(by: n)
-            guard t1.overflow == false else { return 0 }
+            guard t1.overflow == false else { print("4"); return 0 }
             let p10n = t1.partialValue
-            guard p10n < Int32.max else { return 0 }
-            guard p10n > Int32.min else { return 0 }
+            guard p10n <= Int32.max else { print("5"); return 0 }
+            guard p10n >= Int32.min else { print("6"); return 0 }
             let t2 = ret.addingReportingOverflow(p10n)
-            guard t2.overflow == false else { return 0 }
+            guard t2.overflow == false else { print("7"); return 0 }
             let newRet = t2.partialValue
-            guard newRet < Int32.max else { return 0 }
-            guard newRet > Int32.min else { return 0 }
+            guard newRet <= Int32.max else { print("8"); return 0 }
+            guard newRet >= Int32.min else { print("9"); return 0 }
             ret = newRet
             p10X /= 10
         }
@@ -60,7 +57,7 @@ final class Solution {
 
 let solution = Solution()
 
-let x = -123456
+let x = -2147483412
 let ans = solution.reverse(x)
 print("ans: \(ans)")
 
