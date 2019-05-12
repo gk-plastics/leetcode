@@ -44,8 +44,8 @@ let x = 123456789
 // let nd = solution.numberOfDigits(x)
 // print("nd: \(nd)")
 
-let r = solution.reverse(x)
-print("r: \(r)")
+let ans = solution.reverse(x)
+print("ans: \(ans)")
 
 
 // 123
