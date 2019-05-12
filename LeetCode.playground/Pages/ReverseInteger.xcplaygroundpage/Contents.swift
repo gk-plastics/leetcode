@@ -3,10 +3,10 @@ import Foundation
 final class Solution {
     func reverse(_ x: Int) -> Int {
         var n = 1
-        var p10X = 1
+        var p10 = 1, p10X = 1
         var a = [Int]()
         while true {
-            let p10 = Int(truncating: NSDecimalNumber(decimal: pow(10, n)) )
+            p10 *= 10
             //print("p10: \(p10)")
             let m = (x % p10)
             //print("m: \(m)")
@@ -28,8 +28,9 @@ final class Solution {
     // Experimental
     func numberOfDigits(_ x: Int) -> Int {
         var n = 1
+        var p10 = 1
         while true {
-            let p10 = Int(truncating: NSDecimalNumber(decimal: pow(10, n)) )
+            p10 *= 10
             if x / p10 < 1 { break }
             n += 1
         }
@@ -40,13 +41,11 @@ final class Solution {
 let solution = Solution()
 
 let x = 123456789
-
-// let nd = solution.numberOfDigits(x)
-// print("nd: \(nd)")
-
 let ans = solution.reverse(x)
 print("ans: \(ans)")
 
+//let nd = solution.numberOfDigits(x)
+//print("nd: \(nd)")
 
 // 123
 // 1111011
