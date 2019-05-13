@@ -1,5 +1,25 @@
 import Foundation
 
+// Based on the Solution (Approach 1)
+final class SolutionImproved {
+    func reverse(_ x: Int) -> Int {
+        //print("Int32.max: \(Int32.max)")
+        //print("Int32.min: \(Int32.min)")
+        var ret: Int = 0
+        var mx = x
+        while mx != 0 {
+            let pop = mx % 10
+            mx /= 10
+            //print("pop: \(pop)")
+            if (ret > Int32.max / 10) || (ret == Int32.max / 10 && pop > 7) { return 0 }
+            if (ret < Int32.min / 10) || (ret == Int32.max / 10 && pop < -8) { return 0 }
+            ret = ret * 10 + pop
+        }
+        return ret
+    }
+}
+
+// My solution
 final class Solution {
     //let min: Int = Int(truncating: NSDecimalNumber(decimal: pow(-2, 31)))
     //let max: Int = Int(truncating: NSDecimalNumber(decimal: pow(2, 31) - 1))
@@ -55,9 +75,10 @@ final class Solution {
     }
 }
 
-let solution = Solution()
+let solution = SolutionImproved()
 
-let x = -2147483412
+let x = 1463847412
+print("x: \(x)")
 let ans = solution.reverse(x)
 print("ans: \(ans)")
 
