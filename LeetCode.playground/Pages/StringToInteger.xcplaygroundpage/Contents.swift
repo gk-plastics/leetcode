@@ -20,9 +20,7 @@ final class Solution {
                 if c.isDigit == false {
                     // Handle case such as "0-1"
                     guard digitChars.isEmpty else { break }
-                    let prevIndex = str.index(before: index)
-                    let prevChar = str[index]
-                    if prevChar == "0" { digitChars.append(prevChar) }
+                    if c == "0" { digitChars.append(c) }
                     break
                 }
                 // Handle case such as "-000000000000001"
