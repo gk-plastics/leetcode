@@ -15,8 +15,20 @@ final class Solution {
         for _ in 0 ..< cnt {
             let c = str[index]
             index = str.index(after: index)
+            //print("c: \(c)")
             if let isNegative = isNegative {
-                guard c.isDigit else { break }
+                if c.isDigit == false {
+                    // Handle case such as "0-1"
+                    guard digitChars.isEmpty else { break }
+                    let prevIndex = str.index(before: index)
+                    let prevChar = str[index]
+                    if prevChar == "0" { digitChars.append(prevChar) }
+                    break
+                }
+                // Handle case such as "-000000000000001"
+                if digitChars.isEmpty && c == "0" {
+                    continue
+                }
                 digitChars.append(c)
                 // Check range of expected integer
                 if digitChars.count > 10 {
@@ -28,6 +40,8 @@ final class Solution {
                 } else if c == "-" {
                     isNegative = true
                 } else if c == "+" {
+                    isNegative = false
+                } else if c == "0" {
                     isNegative = false
                 } else if c.isDigit {
                     isNegative = false
@@ -54,7 +68,7 @@ extension Character {
 }
 
 let solution = Solution()
-let str = "42" // "42", "   -42", "4193 with words", "words and 987", "-91283472332"
+let str = "0-1" // "42", "   -42", "4193 with words", "words and 987", "-91283472332"
 
 print("Int32.min: \(Int32.min)")
 print("Int32.max: \(Int32.max)")
