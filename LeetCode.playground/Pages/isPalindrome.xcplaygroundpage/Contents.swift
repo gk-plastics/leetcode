@@ -46,7 +46,6 @@ class Solution {
         let l = n - 1
         print("digits: \(digits)")
         let half = n/2
-        var mx = x
         for i in 0..<half {
             guard digits[i] == digits[l - i] else { return false }
         }
@@ -56,7 +55,6 @@ class Solution {
     // Assumes that positiveInt is a positive integer
     private func digits(of positiveInt: Int) -> [Int] {
         var mx = positiveInt
-        var n = 0
         var digits = [Int]()
         while mx > 0 {
             digits.insert(mx % 10, at: 0)
