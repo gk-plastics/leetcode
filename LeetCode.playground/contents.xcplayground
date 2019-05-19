@@ -9,5 +9,6 @@
         <page name='ZigZagConversion'/>
         <page name='ReverseInteger'/>
         <page name='StringToInteger'/>
+        <page name='isPalindrome'/>
     </pages>
 </playground>
