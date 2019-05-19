@@ -4,6 +4,7 @@ import Foundation
 final class SolutionImproved2 {
     func isPalindrome(_ x: Int) -> Bool {
         if x < 0 { return false }
+        else if x < 10 { return true }
         var rvrsd = 0
         var input = x
         while input > 0 {
