@@ -10,5 +10,6 @@
         <page name='ReverseInteger'/>
         <page name='StringToInteger'/>
         <page name='isPalindrome'/>
+        <page name='RegularExpressionMatching'/>
     </pages>
 </playground>
