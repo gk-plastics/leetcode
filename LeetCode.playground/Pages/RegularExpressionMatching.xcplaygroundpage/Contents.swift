@@ -4,38 +4,53 @@ final class Solution {
     func isMatch(_ s: String, _ p: String) -> Bool {
         let sChars = Array(s)
         let pChars = Array(p)
-        var pi = 0
+        var i = 0
         var prevPChar: Character?
         var pCarry: Character?
         for sChar in sChars {
-            if let pCarryChar = pCarry {
-                if pCarryChar == "." { continue }
-                if sChar == pCarryChar {
-                    continue
+            print("sChar: \(sChar)")
+            guard i < pChars.count else {
+                if let pCarryChar = pCarry {
+                    if pCarryChar == "." {
+                        continue
+                    } else if sChar == pCarryChar {
+                        continue
+                    } else {
+                        return false
+                    }
                 } else {
-                    pCarry = nil
-                    pi += 1
+                    return false
+                }
+            }
+
+            let pChar = pChars[i]
+            i += 1
+
+            if let pCarryChar = pCarry {
+                print("pCarryChar: \(pCarryChar)")
+                if pCarryChar == "." {
+                    continue
+                } else if sChar == pCarryChar {
+                    continue
                 }
             } else {
-                guard pi < pChars.count else { return false }
-                let pChar = pChars[pi]
-                if pChar == "." {
-                    continue
-                } else if pChar == "*" {
+                print("pChar: \(pChar)")
+                if pChar == "*" {
                     guard let prevPChar = prevPChar else {
                         print("No character to repeat. Returning.")
                         return false
                     }
-                    pCarry = pChar
+                    pCarry = prevPChar
                     continue
                 } else {
-                    pi += 1
                     prevPChar = pChar
-                    if sChar == pChar {
+                    if pChar == "." {
+                        continue
+                    } else if sChar == pChar {
                         continue
                     } else {
-                        guard pi < pChars.count else { return false }
-                        guard pChars[pi] == "*" else { return false } // If next pChar is "*", do not terminate check
+                        guard i < pChars.count else { return false }
+                        guard pChars[i] == "*" else { return false } // If next pChar is "*", do not terminate check
                     }
                 }
             }
@@ -45,5 +60,5 @@ final class Solution {
 }
 
 let solution = Solution()
-let ans = solution.isMatch("mississippi", "mis*is*p*.") // "mississippi", "mis*is*p*."
+let ans = solution.isMatch("mississippi", "mis*is*ip*.")
 print("ans: \(ans)")
