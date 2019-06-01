@@ -8,10 +8,10 @@ final class Solution {
         var i = 0
         var pCarry: Character?
         for sChar in sChars {
-            print("sChar: \(sChar)")
+            //print("sChar: \(sChar)")
             guard i < pChars.count else {
                 if let pCarryChar = pCarry {
-                    print("pCarryChar: \(pCarryChar)")
+                    //print("pCarryChar: \(pCarryChar)")
                     if pCarryChar == "." {
                         continue
                     } else if sChar == pCarryChar {
@@ -25,18 +25,19 @@ final class Solution {
             }
 
             let pChar = pChars[i]
-            print("pChar: \(pChar)")
+            //print("pChar: \(pChar)")
             i += 1
+
+            if i == sChars.count {
+                if i < pChars.count && pChars[i] != "*" { return false }
+            }
 
             if pChar == "*" {
                 guard let pCarryChar = pCarry else {
                     //print("Invalid Operation: pCarry is nil.");
                     return false
                 }
-                if i >= sChars.count {
-                    guard pChars[i] == "*" else { return false }
-                }
-                print("pCarryChar: \(pCarryChar)")
+                //print("pCarryChar: \(pCarryChar)")
                 if pCarryChar == "." {
                     continue
                 } else if pCarryChar == sChar {
@@ -64,5 +65,5 @@ final class Solution {
 }
 
 let solution = Solution()
-let ans = solution.isMatch("ab", ".*c") // "mississippi", "mis*is*ip*."
+let ans = solution.isMatch("ab", ".*c") // "mississippi" / "mis*is*ip*.", "aa" / "a*", "ab" / ".*c"
 print("ans: \(ans)")
