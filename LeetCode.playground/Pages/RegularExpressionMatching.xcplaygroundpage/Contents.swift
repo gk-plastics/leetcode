@@ -10,7 +10,9 @@ final class Solution {
         for sChar in sChars {
             print("sChar: \(sChar)")
             guard i < pChars.count else {
+                print("i is smaller than pChars.count")
                 if let pCarryChar = pCarry {
+                    print("pCarryChar: \(pCarryChar)")
                     if pCarryChar == "." {
                         continue
                     } else if sChar == pCarryChar {
@@ -24,35 +26,31 @@ final class Solution {
             }
 
             let pChar = pChars[i]
+            print("pChar: \(pChar)")
             i += 1
-
-            if let pCarryChar = pCarry {
+            if pChar == "*" {
+                guard let pCarryChar = pCarry else { print("Invalid Operation: pCarry is nil."); return false }
                 print("pCarryChar: \(pCarryChar)")
                 if pCarryChar == "." {
                     continue
-                } else if sChar == pCarryChar {
-                    continue
-                }
-            } else {
-                print("pChar: \(pChar)")
-                if pChar == "*" {
-                    guard let prevPChar = prevPChar else {
-                        print("No character to repeat. Returning.")
-                        return false
-                    }
-                    pCarry = prevPChar
+                } else if pCarryChar == sChar {
                     continue
                 } else {
-                    prevPChar = pChar
-                    if pChar == "." {
-                        continue
-                    } else if sChar == pChar {
-                        continue
-                    } else {
-                        guard i < pChars.count else { return false }
-                        guard pChars[i] == "*" else { return false } // If next pChar is "*", do not terminate check
-                    }
+                    pCarry = nil
+                    guard i < pChars.count else { return false }
+                    print("pChars[i]: \(pChars[i])")
+                    guard pChars[i] == sChar else { return false }
                 }
+            } else {
+                if i < pChars.count && pChars[i] == "*" {
+                    pCarry = pChar
+                    continue
+                } else {
+                    pCarry = nil
+                }
+                if pChar == "." { continue }
+                else if sChar == pChar { continue }
+                else { return false }
             }
         }
         return true
@@ -60,5 +58,5 @@ final class Solution {
 }
 
 let solution = Solution()
-let ans = solution.isMatch("mississippi", "mis*is*ip*.")
+let ans = solution.isMatch("aa", "a") // "mississippi", "mis*is*ip*."
 print("ans: \(ans)")
