@@ -44,12 +44,15 @@ final class Solution {
                     s += 1
                     p += 1
                     continue
-                } else if p + 1 < pCount && pChars[p + 1] == "*" {
-                    print("NextChar is * so skip. pCarry: \(pCarry)")
-                    p += 1
-                    continue
                 } else {
-                    return false
+                    p += 1
+                    if p < pCount && pChars[p] == "*" && p < pLast {
+                        print("NextChar is * so skip. pCarry: \(pCarry)")
+                        p += 1
+                        continue
+                    } else {
+                        return false
+                    }
                 }
             } else {
                 return false
@@ -67,5 +70,5 @@ final class Solution {
 
 
 let solution = Solution()
-let ans = solution.isMatch("mississippi", "mis*is*p*.") // "mississippi" / "mis*is*ip*.", "aa" / "a*", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("aaa", "ab*ac*a") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
 print("ans: \(ans)")
