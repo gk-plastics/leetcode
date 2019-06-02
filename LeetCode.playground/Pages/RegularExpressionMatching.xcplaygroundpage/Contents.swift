@@ -32,9 +32,11 @@ final class Solution {
             if pChar == "*" || isCarrying {
                 guard sChars.isEmpty == false else { return true } // Prevent crach in case of "" / ".*"
                 let sCharX = sChar ?? sChars[sLast]
+                print("sCharX: \(sCharX)")
+                if sChar == nil && pCarry == "." && sCharX != pChar { return false } // Handle case with "ab" / ".*c"
                 if match(pChar: pCarry!, sChar: sCharX) {
                     print("matched with pCarry \(pCarry!)!")
-                    if s >= sLast { p += 1 } // To prevent infinite loop in case of "aa" / "a*"
+                    if s >= sLast { p += 1 } // Prevent infinite loop in case of "aa" / "a*"
                     s += 1
                     isCarrying = true
                 } else {
@@ -78,5 +80,5 @@ final class Solution {
 
 
 let solution = Solution()
-let ans = solution.isMatch("aaa", "a*a") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("ab", ".*c") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
 print("ans: \(ans)")
