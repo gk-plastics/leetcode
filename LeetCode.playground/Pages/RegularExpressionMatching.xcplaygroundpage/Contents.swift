@@ -39,7 +39,7 @@ final class Solution {
                 print("sCharX: \(sCharX)")
                 print("pCarry: \(pCarry!)")
                 // Handle case with "ab" / ".*c" (false) AND "bbbba" / ".*a*a" (true)
-                if sChar == nil && pCarry == "." && sCharX != pChar && pChar != "*" { return false }
+                if sChar == nil && pCarry == "." && sCharX != pChar && pChar != "*" && pChar != "." { return false }
                 if match(pChar: pCarry!, sChar: sCharX) {
                     print("matched with pCarry \(pCarry!)!")
                     if s >= sLast { p += 1 } // Prevent infinite loop in case of "aa" / "a*"
@@ -88,7 +88,14 @@ final class Solution {
     }
 }
 
-
+// "mississippi", "mis*is*ip*." (true)
+// "ab", ".*c" (false)
+// "aaa", "ab*ac*a" (true)
+// "a" / "ab*" (true)
+// "abcd" / "d*" (false)
+// "a" / "d*" (false)
+// "ab", ".*.." (true)
+// "ab", ".*c" (false) / "bbbba", ".*a*a" (true) / "ab", ".*.." (true)
 let solution = Solution()
-let ans = solution.isMatch("bbbba", ".*a*a") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a", "a" / "ab*", "abcd" / "d*", "a" / "d*"
+let ans = solution.isMatch("ab", ".*..")
 print("ans: \(ans)")
