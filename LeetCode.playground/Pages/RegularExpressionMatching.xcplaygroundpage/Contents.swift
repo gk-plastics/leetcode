@@ -26,8 +26,12 @@ final class Solution {
             else { pChar = nil }
             print("pChar: \(String(describing: pChar))")
 
-            if p >= pLast { print("p is at the last") }
-            if s >= sLast { print("s is at the last") }
+//            if p >= pLast {
+//                print("p is at the last")
+//            }
+//            if s >= sLast {
+//                print("s is at the last")
+//            }
 
             if pChar == "*" || isCarrying {
                 guard sChars.isEmpty == false else { return true } // Prevent crach in case of "" / ".*"
@@ -55,7 +59,7 @@ final class Solution {
                 } else {
                     let pNext = p + 1
                     // pNext < pLast is needed to avoid infinite loop with case where "abcd" / "d*"
-                    if pNext < pCount && pChars[pNext] == "*" && pNext < pLast {
+                    if pNext < pCount && pChars[pNext] == "*" {
                         print("NextChar is * so skip. pCarry: \(pCarry!)")
                         p = pNext
                         isCarrying = true
@@ -80,5 +84,5 @@ final class Solution {
 
 
 let solution = Solution()
-let ans = solution.isMatch("ab", ".*c") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("aaa", "ab*ac*a") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
 print("ans: \(ans)")
