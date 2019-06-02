@@ -45,6 +45,10 @@ final class Solution {
                     isCarrying = true
                 } else {
                     print("matched with 0 char")
+                    if p >= pLast && s <= sLast {
+                        print("p has been expired but s is still remaining. Returning false.")
+                        return false
+                    }
                     p += 1
                     isCarrying = false
                 }
@@ -84,5 +88,5 @@ final class Solution {
 
 
 let solution = Solution()
-let ans = solution.isMatch("a", "ab*") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("abcd", "d*") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a", "a" / "ab*", "abcd" / "d*", "a" / "d*"
 print("ans: \(ans)")
