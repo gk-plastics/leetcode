@@ -45,10 +45,11 @@ final class Solution {
                     p += 1
                     continue
                 } else {
-                    p += 1
-                    if p < pCount && pChars[p] == "*" && p < pLast {
+                    let pNext = p + 1
+                    // pNext < pLast is needed to avoid infinite loop with case where "abcd" / "d*"
+                    if pNext < pCount && pChars[pNext] == "*" && pNext < pLast {
                         print("NextChar is * so skip. pCarry: \(pCarry)")
-                        p += 1
+                        p = pNext
                         continue
                     } else {
                         return false
@@ -70,5 +71,5 @@ final class Solution {
 
 
 let solution = Solution()
-let ans = solution.isMatch("aaa", "ab*ac*a") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("abcd", "d*") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
 print("ans: \(ans)")
