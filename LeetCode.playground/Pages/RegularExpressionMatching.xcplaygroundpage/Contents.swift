@@ -27,6 +27,7 @@ final class Solution {
             if s >= sLast { print("s is at the last") }
 
             if pChar == "*" {
+                guard sChars.isEmpty == false else { return true } // Prevent crach in case of "" / ".*"
                 let sCharX = sChar ?? sChars[sLast]
                 if match(pChar: pCarry!, sChar: sCharX) {
                     print("matched with pCarry \(pCarry!)!")
@@ -71,5 +72,5 @@ final class Solution {
 
 
 let solution = Solution()
-let ans = solution.isMatch("abcd", "d*") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("", ".*") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
 print("ans: \(ans)")
