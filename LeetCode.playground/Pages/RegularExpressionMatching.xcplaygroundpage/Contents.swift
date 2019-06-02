@@ -4,56 +4,70 @@ final class Solution {
     func isMatch(_ s: String, _ p: String) -> Bool {
         let sChars = Array(s)
         let sCount = sChars.count
+        let sLast = sCount - 1
         let pChars = Array(p)
         let pCount = pChars.count
+        let pLast = pCount - 1
         var s = 0, p = 0
         var pCarry: Character?
-        while s < sCount {
+        while s < sCount || p < pCount {
             print("s: \(s)")
             print("p: \(p)")
 
-            let sChar = sChars[s]
-            print("sChar: \(sChar)")
+            let sChar: Character? = s < sCount ? sChars[s] : nil
+            print("sChar: \(String(describing: sChar))")
 
             let pChar = pChars[p]
             print("pChar: \(pChar)")
-            p += 1
+
+            if p >= pLast {
+                print("p is at the last")
+                if pChar == "*" || pChar == "." { return true }
+                else if pChar == sChar  { return true }
+                else { return false }
+            }
+
+            if s >= sLast {
+                print("s is at the last")
+            }
 
             if pChar == "*" {
-                let uPCarry = pCarry!
                 s += 1
-                print("uPCarry: \(uPCarry)")
-                if uPCarry == "." {
-                    continue
-                } else if uPCarry == sChar {
-                    continue
+                let sCharX = sChar ?? sChars[sLast]
+                if match(pChar: pCarry!, sChar: sCharX) {
+                    print("matched with pCarry!")
+                    p += 1
                 } else {
-                    pCarry = nil
-                    guard p < pCount else { print("=== A ==="); return false }
-                    print("pChars[p]: \(pChars[p])")
-                    guard pChars[p] == sChar else { print("=== B ==="); return false }
+                    print("matched with 0 char")
                 }
+                continue
             } else {
-                if p < pCount && pChars[p] == "*" {
-                    pCarry = pChar
-                    // s += 1 // NOT NEEDED
-                    print("pCarry: \(pCarry!)")
+                s += 1
+                pCarry = pChar
+                //print("==== s: \(s)  p: \(p) ====")
+                if match(pChar: pChar, sChar: sChar) {
+                    print("matched!")
+                    p += 1
+                    continue
+                } else if p < pCount && pChars[p] == "*" {
+                    print("NextChar is * so skip. pCarry: \(pCarry)")
                     continue
                 } else {
-                    s += 1
-                    pCarry = nil
-                    continue
+                    return false
                 }
-                if pChar == "." { s += 1; continue }
-                else if sChar == pChar { s += 1; continue }
-                else { print("=== C ==="); return false }
             }
         }
         return true
+    }
+
+    private func match(pChar: Character, sChar: Character?) -> Bool {
+        if pChar == "." { return true }
+        else if pChar == sChar { return true }
+        return false
     }
 }
 
 
 let solution = Solution()
-let ans = solution.isMatch("aaa", "ab*ac*a") // "mississippi" / "mis*is*ip*.", "aa" / "a*", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("mississippi", "mis*is*ip*.") // "mississippi" / "mis*is*ip*.", "aa" / "a*", "ab" / ".*c", "aaa" / "ab*ac*a"
 print("ans: \(ans)")
