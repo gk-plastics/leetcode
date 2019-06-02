@@ -17,32 +17,27 @@ final class Solution {
             let sChar: Character? = s < sCount ? sChars[s] : nil
             print("sChar: \(String(describing: sChar))")
 
-            let pChar = pChars[p]
-            print("pChar: \(pChar)")
+            let pChar: Character?
+            if p < pCount { pChar = pChars[p] }
+            else if pChars[pLast] == "*" { pChar = "*" }
+            else { pChar = nil }
+            print("pChar: \(String(describing: pChar))")
 
-            if p >= pLast {
-                print("p is at the last")
-                if pChar == "*" || pChar == "." { return true }
-                else if pChar == sChar  { return true }
-                else { return false }
-            }
-
-            if s >= sLast {
-                print("s is at the last")
-            }
+            if p >= pLast { print("p is at the last") }
+            if s >= sLast { print("s is at the last") }
 
             if pChar == "*" {
                 let sCharX = sChar ?? sChars[sLast]
                 if match(pChar: pCarry!, sChar: sCharX) {
-                    print("matched with pCarry!")
+                    print("matched with pCarry \(pCarry!)!")
+                    if s >= sLast { p += 1 } // To prevent infinite loop in case of "aa" / "a*"
                     s += 1
-                    p += 1
                 } else {
                     print("matched with 0 char")
                     p += 1
                 }
                 continue
-            } else {
+            } else if let pChar = pChar {
                 pCarry = pChar
                 if match(pChar: pChar, sChar: sChar) {
                     print("matched!")
@@ -56,6 +51,8 @@ final class Solution {
                 } else {
                     return false
                 }
+            } else {
+                return false
             }
         }
         return true
@@ -70,5 +67,5 @@ final class Solution {
 
 
 let solution = Solution()
-let ans = solution.isMatch("aab", "c*a*b") // "mississippi" / "mis*is*ip*.", "aa" / "a*", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("mississippi", "mis*is*p*.") // "mississippi" / "mis*is*ip*.", "aa" / "a*", "ab" / ".*c", "aaa" / "ab*ac*a"
 print("ans: \(ans)")
