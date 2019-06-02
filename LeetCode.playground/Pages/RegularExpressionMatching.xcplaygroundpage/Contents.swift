@@ -32,25 +32,26 @@ final class Solution {
             }
 
             if pChar == "*" {
-                s += 1
                 let sCharX = sChar ?? sChars[sLast]
                 if match(pChar: pCarry!, sChar: sCharX) {
                     print("matched with pCarry!")
+                    s += 1
                     p += 1
                 } else {
                     print("matched with 0 char")
+                    p += 1
                 }
                 continue
             } else {
-                s += 1
                 pCarry = pChar
-                //print("==== s: \(s)  p: \(p) ====")
                 if match(pChar: pChar, sChar: sChar) {
                     print("matched!")
+                    s += 1
                     p += 1
                     continue
-                } else if p < pCount && pChars[p] == "*" {
+                } else if p + 1 < pCount && pChars[p + 1] == "*" {
                     print("NextChar is * so skip. pCarry: \(pCarry)")
+                    p += 1
                     continue
                 } else {
                     return false
@@ -69,5 +70,5 @@ final class Solution {
 
 
 let solution = Solution()
-let ans = solution.isMatch("mississippi", "mis*is*ip*.") // "mississippi" / "mis*is*ip*.", "aa" / "a*", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("aab", "c*a*b") // "mississippi" / "mis*is*ip*.", "aa" / "a*", "ab" / ".*c", "aaa" / "ab*ac*a"
 print("ans: \(ans)")
