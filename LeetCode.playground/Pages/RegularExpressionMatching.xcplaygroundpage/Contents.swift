@@ -12,38 +12,41 @@ final class Solution {
         let pLast = pCount - 1
         var s = 0, p = 0
         var pCarry: Character?
+        var isCarrying: Bool = false
         while s < sCount || p < pCount {
-            //print("s: \(s)")
-            //print("p: \(p)")
+            print("s: \(s)")
+            print("p: \(p)")
 
             let sChar: Character? = s < sCount ? sChars[s] : nil
-            //print("sChar: \(String(describing: sChar))")
+            print("sChar: \(String(describing: sChar))")
 
             let pChar: Character?
             if p < pCount { pChar = pChars[p] }
             else if pChars[pLast] == "*" { pChar = "*" }
             else { pChar = nil }
-            //print("pChar: \(String(describing: pChar))")
+            print("pChar: \(String(describing: pChar))")
 
-            //if p >= pLast { print("p is at the last") }
-            //if s >= sLast { print("s is at the last") }
+            if p >= pLast { print("p is at the last") }
+            if s >= sLast { print("s is at the last") }
 
-            if pChar == "*" {
+            if pChar == "*" || isCarrying {
                 guard sChars.isEmpty == false else { return true } // Prevent crach in case of "" / ".*"
                 let sCharX = sChar ?? sChars[sLast]
                 if match(pChar: pCarry!, sChar: sCharX) {
-                    //print("matched with pCarry \(pCarry!)!")
+                    print("matched with pCarry \(pCarry!)!")
                     if s >= sLast { p += 1 } // To prevent infinite loop in case of "aa" / "a*"
                     s += 1
+                    isCarrying = true
                 } else {
-                    //print("matched with 0 char")
+                    print("matched with 0 char")
                     p += 1
+                    isCarrying = false
                 }
                 continue
             } else if let pChar = pChar {
                 pCarry = pChar
                 if match(pChar: pChar, sChar: sChar) {
-                    //print("matched!")
+                    print("matched!")
                     s += 1
                     p += 1
                     continue
@@ -51,8 +54,9 @@ final class Solution {
                     let pNext = p + 1
                     // pNext < pLast is needed to avoid infinite loop with case where "abcd" / "d*"
                     if pNext < pCount && pChars[pNext] == "*" && pNext < pLast {
-                        //print("NextChar is * so skip. pCarry: \(pCarry)")
+                        print("NextChar is * so skip. pCarry: \(pCarry!)")
                         p = pNext
+                        isCarrying = true
                         continue
                     } else {
                         return false
@@ -74,5 +78,5 @@ final class Solution {
 
 
 let solution = Solution()
-let ans = solution.isMatch("", ".*") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
+let ans = solution.isMatch("aaa", "a*a") // "mississippi" / "mis*is*ip*.", "ab" / ".*c", "aaa" / "ab*ac*a"
 print("ans: \(ans)")
