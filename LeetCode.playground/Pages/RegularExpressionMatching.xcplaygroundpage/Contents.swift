@@ -50,6 +50,9 @@ final class Solution {
                         s = sCharCarryingStartIndex
                         isCarrying = false
                         continue
+                    } else if !(pChar == "*") {
+                        print("s has been expired but p is still remaining. Returning false.")
+                        return false
                     }
                 }
 
@@ -57,21 +60,22 @@ final class Solution {
                 print("=== pChar: \(pChar) ===")
                 print("=== pCarry: \(pCarry!) ===")
 
-                // Handle case with "ab" / ".*c" (false) AND "bbbba" / ".*a*a" (true)
+                // Handle case with "ab", ".*c" (false) AND "bbbba" / ".*a*a" (true)
                 // if sChar == nil && pCarry == "." && sCharX != pChar && pChar != "*" && pChar != "." { return false }
 
-                if match(pChar: pCarry!, sChar: sChar!) {
+                if match(pChar: pCarry!, sChar: sChar) {
                     print("matched with pCarry \(pCarry!)!")
                     if s >= sLast { p += 1 } // Prevent infinite loop in case of "aa" / "a*"
                     s += 1
                     isCarrying = true
                 } else {
                     print("matched with 0 char")
+                    if s >= sLast { return false }
                     p += 1
                     isCarrying = false
                 }
                 continue
-            } else if let pChar = pChar, let sChar = sChar {
+            } else if let pChar = pChar {
                 isCarrying = false
                 pCarry = pChar
                 sCharCarryingStartIndex = s
@@ -97,7 +101,8 @@ final class Solution {
         return true
     }
 
-    private func match(pChar: Character, sChar: Character) -> Bool {
+    private func match(pChar: Character, sChar: Character?) -> Bool {
+        guard let sChar = sChar else { return false }
         if pChar == "." { return true }
         else if pChar == sChar { return true }
         return false
@@ -111,9 +116,9 @@ final class Solution {
 // "abcd", "d*" (false)
 // "a", "d*" (false)
 // "ab", ".*.." (true)
-// "ab", ".*c" (false) / "bbbba", ".*a*a" (true) / "ab", ".*.." (true) / "a", ".*..a*" (false)
-//
+// "a", ".*..a*" (false)
+// "bbbba", ".*a*a" (true)
 let solution = Solution()
-let ans = solution.isMatch("ab", ".*..")
+let ans = solution.isMatch("bbbba", ".*a*a")
 
 print("ans: \(ans)")
