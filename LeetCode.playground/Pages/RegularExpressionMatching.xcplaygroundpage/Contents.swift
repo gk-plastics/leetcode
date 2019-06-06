@@ -2,6 +2,23 @@ import Foundation
 
 final class Solution {
     func isMatch(_ s: String, _ p: String) -> Bool {
+        print("s: \(s)")
+        print("p: \(p)")
+        guard let pc = p.first else { return s.isEmpty }
+        guard let sc = s.first else { return false }
+        let sRest = s.suffix(from: s.index(after: s.startIndex))
+        let pRest = p.suffix(from: p.index(after: p.startIndex))
+        return match(sc, pc) && isMatch(String(sRest), String(pRest))
+    }
+    private func match(_ sc: Character, _ pc: Character) -> Bool {
+        if pc == "." { return true }
+        return sc == pc
+    }
+}
+
+// Could NOT make it work with all test cases
+final class SolutionFailed {
+    func isMatch(_ s: String, _ p: String) -> Bool {
         guard p.isEmpty == false else { return false }
 
         let sChars = Array(s)
@@ -119,6 +136,5 @@ final class Solution {
 // "a", ".*..a*" (false)
 // "bbbba", ".*a*a" (true)
 let solution = Solution()
-let ans = solution.isMatch("bbbba", ".*a*a")
-
+let ans = solution.isMatch("abcdefg", "abcdefg")
 print("ans: \(ans)")
